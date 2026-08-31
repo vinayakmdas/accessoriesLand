@@ -12,8 +12,8 @@ export const businessConfig = {
   tagline: "Auto Parts & Car Accessories",
 
   phone: "+91 9995474127", // digits only with country code, e.g. "+919000000000"
-  whatsapp: "9995474127", // digits only with country code, e.g. "919000000000"
-  email: "afsupgdi@gmil.com", // ey.g. "info@accessoriesland.i n"
+  whatsapp: "919995474127", // digits only with country code, e.g. "919000000000"
+  email: "afsupgdi@gmail.com", // e.g. "info@accessoriesland.in"
 
   address: "Parappanagadi Road, Kariparambu, Malappuram, Kerala - 676306",
   gstin: "32CBTPA9964R1ZN",
