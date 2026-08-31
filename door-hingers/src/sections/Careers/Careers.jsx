@@ -18,7 +18,7 @@ export default function Careers() {
             Join The Team
           </span>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold uppercase tracking-tight text-paper mt-3 mb-4">
-            Build Your Career With Door Hingers
+            Build Your Career With Accessories Land
           </h2>
           <p className="text-steel-light text-base sm:text-lg max-w-2xl mx-auto mb-8">
             We're always looking for passionate and skilled people who want to grow with us.

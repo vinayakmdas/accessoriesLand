@@ -25,7 +25,7 @@ export default function About() {
           <div className="relative rounded-md overflow-hidden border border-white/10">
             <img
               src={workshopImage}
-              alt="Door Hingers workshop"
+              alt="Accessories Land workshop"
               loading="lazy"
               className="w-full h-[420px] object-cover"
             />
@@ -47,13 +47,13 @@ export default function About() {
           transition={{ duration: 0.6 }}
         >
           <span className="plate-number text-red text-xs font-semibold tracking-[0.25em] uppercase">
-            About Door Hingers
+            About Accessories Land
           </span>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold uppercase tracking-tight text-paper mt-3 mb-5">
             Everything your car needs, done right.
           </h2>
           <p className="text-steel-light text-base sm:text-lg leading-relaxed mb-6">
-            Door Hingers provides automotive accessories, in-car technology, electrical
+            Accessories Land provides automotive accessories, in-car technology, electrical
             solutions, safety systems, and interior &amp; exterior upgrades — plus detailing
             that brings the finish back to showroom condition. Every vehicle that comes
             through our doors gets careful diagnosis, honest advice, and clean, professional

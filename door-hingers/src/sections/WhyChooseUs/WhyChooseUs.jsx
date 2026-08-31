@@ -35,7 +35,7 @@ export default function WhyChooseUs() {
     <section className="relative bg-ink py-24 overflow-hidden">
       <div className="grain-overlay" />
       <div className="max-w-7xl mx-auto px-5 sm:px-8 relative">
-        <SectionTitle eyebrow="The Difference" title="Why Choose Door Hingers?" />
+        <SectionTitle eyebrow="The Difference" title="Why Choose Accessories Land?" />
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-5">
           {reasons.map((reason, i) => {

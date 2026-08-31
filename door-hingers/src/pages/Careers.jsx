@@ -141,7 +141,7 @@ export default function CareersPage() {
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <SectionTitle
           eyebrow="Careers"
-          title="Build Your Career With Door Hingers"
+          title="Build Your Career With Accessories Land"
           subtitle="We're always looking for passionate and skilled people who want to grow with us."
         />
 

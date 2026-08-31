@@ -27,10 +27,10 @@ export default function CTA() {
           Talk to our team about the right accessories, technology, and services for your car.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-4">
-          <Button as={Link} to="/contact" className="bg-white text-ink hover:bg-paper hover:text-ink">
+          <Button as={Link} to="/contact" variant="primary">
             Get a Quote
           </Button>
-          <WhatsAppButton message="Hi Door Hingers, I'd like to get a quote." />
+          <WhatsAppButton message="Hi Accessories Land, I'd like to get a quote." />
         </div>
       </div>
     </section>

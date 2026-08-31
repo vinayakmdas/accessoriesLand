@@ -6,7 +6,7 @@ export default function ServiceCard({ service, index = 0, detailed = false }) {
   const Icon = Icons[service.icon] || Icons.Wrench;
   const enquireHref = businessConfig.whatsapp
     ? `https://wa.me/${businessConfig.whatsapp}?text=${encodeURIComponent(
-        `Hi Door Hingers, I'd like to enquire about ${service.title}.`
+        `Hi Accessories Land, I'd like to enquire about ${service.title}.`
       )}`
     : "#contact";
 

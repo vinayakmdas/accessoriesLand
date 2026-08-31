@@ -77,9 +77,9 @@ export default function Contact() {
             {businessConfig.mapUrl && (
               <div className="rounded-md overflow-hidden border border-white/10 mt-2">
                 <iframe
-                  title="Door Hingers location"
+                  title="Accessories Land location"
                   src={`https://www.google.com/maps?q=${encodeURIComponent(
-                    businessConfig.address
+                    businessConfig.mapCoordinates || businessConfig.address
                   )}&output=embed`}
                   className="w-full h-56 grayscale contrast-125 invert-[0.92]"
                   loading="lazy"

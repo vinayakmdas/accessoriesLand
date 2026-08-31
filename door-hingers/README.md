@@ -1,6 +1,6 @@
-# Door Hingers
+# Accessories Land
 
-Modern, premium website for **Door Hingers** — auto parts, car accessories,
+Modern, premium website for **Accessories Land** — auto parts, car accessories,
 and automotive customization.
 
 ## Stack

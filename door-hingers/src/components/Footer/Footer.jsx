@@ -11,7 +11,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
         <div>
           <Link to="/" className="font-display text-2xl font-bold uppercase tracking-wide text-paper">
-            Door <span className="text-red">Hingers</span>
+            Accessories <span className="text-red">Land</span>
           </Link>
           <p className="text-steel-light text-sm mt-3 max-w-xs">{businessConfig.tagline}</p>
 
@@ -100,6 +100,19 @@ export default function Footer() {
                 </a>
               </li>
             )}
+            {businessConfig.whatsapp && (
+              <li className="flex items-center gap-2">
+                <Phone size={16} className="text-red shrink-0" />
+                <a
+                  href={`https://wa.me/${businessConfig.whatsapp}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-red transition-colors"
+                >
+                  WhatsApp
+                </a>
+              </li>
+            )}
             {businessConfig.email && (
               <li className="flex items-center gap-2">
                 <Mail size={16} className="text-red shrink-0" />
@@ -113,7 +126,7 @@ export default function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto px-5 sm:px-8 mt-12 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-steel">
-        <span>© {year} Door Hingers. All rights reserved.</span>
+        <span>© {year} Accessories Land. All rights reserved.</span>
         {businessConfig.gstin && <span className="plate-number">GSTIN: {businessConfig.gstin}</span>}
       </div>
     </footer>

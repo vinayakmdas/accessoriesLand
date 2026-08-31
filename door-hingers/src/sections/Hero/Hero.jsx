@@ -96,7 +96,7 @@ export default function Hero() {
           transition={{ duration: 0.6 }}
           className="plate-number text-red text-xs sm:text-sm font-semibold tracking-[0.3em] uppercase"
         >
-          Door Hingers — Auto Parts &amp; Car Accessories
+          Accessories Land — Auto Parts &amp; Car Accessories
         </motion.span>
 
         <motion.h1
@@ -127,7 +127,7 @@ export default function Hero() {
           <Button as={Link} to="/contact">
             Get a Quote
           </Button>
-          <WhatsAppButton message="Hi Door Hingers, I'd like to enquire about your services." />
+          <WhatsAppButton message="Hi Accessories Land, I'd like to enquire about your services." />
         </motion.div>
       </div>
 

@@ -11,7 +11,7 @@ export default function MainLayout() {
         <Outlet />
       </main>
       <Footer />
-      <WhatsAppButton variant="fab" message="Hi Door Hingers, I have a question." />
+      <WhatsAppButton variant="fab" message="Hi Accessories Land, I have a question." />
     </div>
   );
 }

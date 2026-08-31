@@ -42,7 +42,7 @@ export default function Navbar() {
     >
       <nav className="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between">
         <Link to="/" className="font-display text-xl sm:text-2xl font-bold uppercase tracking-wide text-paper">
-          Door <span className="text-red">Hingers</span>
+          Accessories <span className="text-red">Land</span>
         </Link>
 
         <ul className="hidden lg:flex items-center gap-8">

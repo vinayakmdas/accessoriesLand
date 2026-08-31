@@ -1,4 +1,4 @@
-// Service catalogue for Door Hingers.
+// Service catalogue for Accessories Land.
 // Images are imported from src/assets/images/services/<slug>/ — Vite bundles
 // these at build time, so there's no dependency on an external image host.
 //

@@ -11,15 +11,15 @@ import fullCustomization from "../assets/images/gallery/full-customization.svg";
 import accessoriesDisplay from "../assets/images/gallery/accessories-display.svg";
 
 export const gallery = [
-  { id: 1, category: "Shop", title: "Our Workshop", image: shopWorkshop },
+  { id: 1, category: "Accessories", title: "Car Accessories Display", image: accessoriesDisplay },
   { id: 2, category: "Android Systems", title: "Android Stereo Install", image: androidStereoInstall },
-  { id: 3, category: "LED & Electrical", title: "Headlight Upgrade", image: headlightUpgrade },
-  { id: 4, category: "Camera & Safety", title: "Reverse Camera Setup", image: reverseCameraSetup },
-  { id: 5, category: "Interior", title: "Seat Cover Fitting", image: seatCoverFitting },
-  { id: 6, category: "Exterior", title: "Alloy Wheel Fitment", image: alloyWheelFitment },
-  { id: 7, category: "Detailing", title: "Ceramic Coating", image: ceramicCoating },
-  { id: 8, category: "Completed Projects", title: "Full Customization", image: fullCustomization },
-  { id: 9, category: "Accessories", title: "Car Accessories Display", image: accessoriesDisplay },
+  { id: 3, category: "Exterior", title: "Alloy Wheel Fitment", image: alloyWheelFitment },
+  { id: 4, category: "Detailing", title: "Ceramic Coating", image: ceramicCoating },
+  { id: 5, category: "Shop", title: "Our Workshop", image: shopWorkshop },
+  { id: 6, category: "LED & Electrical", title: "Headlight Upgrade", image: headlightUpgrade },
+  { id: 7, category: "Camera & Safety", title: "Reverse Camera Setup", image: reverseCameraSetup },
+  { id: 8, category: "Interior", title: "Seat Cover Fitting", image: seatCoverFitting },
+  { id: 9, category: "Completed Projects", title: "Full Customization", image: fullCustomization },
 ];
 
 export const galleryCategories = [
