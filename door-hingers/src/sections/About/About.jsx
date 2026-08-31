@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Car } from "lucide-react";
 import Button from "../../components/Button/Button";
 import workshopImage from "../../assets/images/about/workshop.svg";
 
@@ -22,12 +22,34 @@ export default function About() {
           transition={{ duration: 0.6 }}
           className="relative"
         >
-          <div className="relative rounded-md overflow-hidden border border-white/10">
-            <img
-              src={workshopImage}
-              alt="Accessories Land workshop"
-              loading="lazy"
-              className="w-full h-[420px] object-cover"
+          <div className="relative rounded-md overflow-hidden border border-white/10 h-[420px] bg-ink-card flex flex-col items-center justify-center">
+            {/* The Car */}
+            <motion.div
+              animate={{ y: [0, -4, 0] }}
+              transition={{ duration: 0.5, repeat: Infinity, ease: "easeInOut" }}
+              className="relative z-10 text-red mb-8"
+            >
+              <Car size={140} strokeWidth={1} />
+            </motion.div>
+
+            {/* The Road Lines */}
+            <div className="absolute top-1/2 mt-16 left-0 right-0 h-[2px] overflow-hidden opacity-30">
+              <motion.div
+                className="w-[200%] h-full flex"
+                animate={{ x: ["0%", "-50%"] }}
+                transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+              >
+                <div className="w-1/2 h-full bg-gradient-to-r from-transparent via-red to-transparent bg-[length:40px_2px] bg-repeat-x"></div>
+                <div className="w-1/2 h-full bg-gradient-to-r from-transparent via-red to-transparent bg-[length:40px_2px] bg-repeat-x"></div>
+              </motion.div>
+            </div>
+
+            {/* Glow / Background elements */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-red/5 pointer-events-none" />
+            <motion.div 
+               animate={{ opacity: [0.3, 0.6, 0.3] }}
+               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-red/10 rounded-full blur-[80px]"
             />
           </div>
           <div className="absolute -bottom-6 -right-6 hidden sm:flex bg-red text-white font-display px-6 py-4 rounded-md shadow-lg">
