@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import Button from "../Button/Button";
@@ -15,9 +15,34 @@ const navItems = [
   { label: "Contact", to: "/contact" },
 ];
 
+/**
+ * Returns true when a nav item should be highlighted as active.
+ * - Hash links (e.g. /#about) are active only when the hash matches.
+ * - The Home link (/) is active only when on "/" with no hash.
+ * - Other links use normal pathname matching.
+ */
+function isNavItemActive(item, location) {
+  const { pathname, hash } = location;
+
+  // Hash-based link (e.g. "/#about")
+  if (item.to.includes("#")) {
+    const [itemPath, itemHash] = item.to.split("#");
+    return pathname === (itemPath || "/") && hash === `#${itemHash}`;
+  }
+
+  // Exact match for Home "/"
+  if (item.to === "/") {
+    return pathname === "/" && !hash;
+  }
+
+  // Standard path prefix match for other routes
+  return pathname.startsWith(item.to);
+}
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -47,20 +72,21 @@ export default function Navbar() {
         </Link>
 
         <ul className="hidden lg:flex items-center gap-8">
-          {navItems.map((item) => (
-            <li key={item.label}>
-              <NavLink
-                to={item.to}
-                className={({ isActive }) =>
-                  `font-display text-sm uppercase tracking-wide transition-colors ${
-                    isActive ? "text-red" : "text-paper/85 hover:text-red"
-                  }`
-                }
-              >
-                {item.label}
-              </NavLink>
-            </li>
-          ))}
+          {navItems.map((item) => {
+            const active = isNavItemActive(item, location);
+            return (
+              <li key={item.label}>
+                <Link
+                  to={item.to}
+                  className={`font-display text-sm uppercase tracking-wide transition-colors ${
+                    active ? "text-red" : "text-paper/85 hover:text-red"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
 
         <div className="hidden lg:block">
@@ -89,21 +115,22 @@ export default function Navbar() {
             className="lg:hidden overflow-hidden bg-ink border-t border-white/10"
           >
             <ul className="flex flex-col px-5 py-4 gap-1">
-              {navItems.map((item) => (
-                <li key={item.label}>
-                  <NavLink
-                    to={item.to}
-                    onClick={() => setOpen(false)}
-                    className={({ isActive }) =>
-                      `block font-display text-base uppercase tracking-wide py-3 border-b border-white/5 ${
-                        isActive ? "text-red" : "text-paper/85"
-                      }`
-                    }
-                  >
-                    {item.label}
-                  </NavLink>
-                </li>
-              ))}
+              {navItems.map((item) => {
+                const active = isNavItemActive(item, location);
+                return (
+                  <li key={item.label}>
+                    <Link
+                      to={item.to}
+                      onClick={() => setOpen(false)}
+                      className={`block font-display text-base uppercase tracking-wide py-3 border-b border-white/5 ${
+                        active ? "text-red" : "text-paper/85"
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
             <div className="px-5 pb-5">
               <Button as={Link} to="/contact" onClick={() => setOpen(false)} className="w-full">
