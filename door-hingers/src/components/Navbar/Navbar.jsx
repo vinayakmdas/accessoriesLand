@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import Button from "../Button/Button";
 import { businessConfig } from "../../config/businessConfig";
+import logoImg from "../../assets/images/logo.png";
 
 const navItems = [
   { label: "Home", to: "/" },
@@ -41,8 +42,8 @@ export default function Navbar() {
       }`}
     >
       <nav className="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between">
-        <Link to="/" className="font-display text-xl sm:text-2xl font-bold uppercase tracking-wide text-paper">
-          Accessories <span className="text-red">Land</span>
+        <Link to="/" className="flex items-center">
+          <img src={logoImg} alt="Accessories Land" className="h-10 sm:h-12 w-auto object-contain" />
         </Link>
 
         <ul className="hidden lg:flex items-center gap-8">

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Image, Users, Video, MapPin, Phone, Mail } from "lucide-react";
 import { businessConfig } from "../../config/businessConfig";
 import { services } from "../../data/services";
+import logoImg from "../../assets/images/logo.png";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -10,8 +11,8 @@ export default function Footer() {
     <footer className="relative bg-ink-soft border-t border-white/5 pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
         <div>
-          <Link to="/" className="font-display text-2xl font-bold uppercase tracking-wide text-paper">
-            Accessories <span className="text-red">Land</span>
+          <Link to="/" className="inline-block">
+            <img src={logoImg} alt="Accessories Land" className="h-14 w-auto object-contain" />
           </Link>
           <p className="text-steel-light text-sm mt-3 max-w-xs">{businessConfig.tagline}</p>
 
