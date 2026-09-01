@@ -1,5 +1,5 @@
 import Hero from "../sections/Hero/Hero";
-import About from "../sections/About/About";
+import ScrollAnimation from "../sections/ScrollAnimation/ScrollAnimation";
 import Services from "../sections/Services/Services";
 import WhyChooseUs from "../sections/WhyChooseUs/WhyChooseUs";
 import Gallery from "../sections/Gallery/Gallery";
@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <About />
+      <ScrollAnimation />
       <Services />
       <WhyChooseUs />
       <Gallery limit={9} showFilters={false} />
