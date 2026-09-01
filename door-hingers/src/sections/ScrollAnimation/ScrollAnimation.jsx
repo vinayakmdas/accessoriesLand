@@ -16,16 +16,15 @@ const frameSrcs = Object.keys(frameModules)
   .map((key) => frameModules[key]);
 
 const TOTAL = frameSrcs.length; // 20
+const FRAME_DURATION = 120; // ms per frame (~8fps — smooth cinematic feel)
 
 /* ─── Component ─────────────────────────────────────────────────────── */
 export default function ScrollAnimation() {
-  const sectionRef = useRef(null);
   const canvasRef = useRef(null);
   const imagesRef = useRef([]);
   const currentFrameRef = useRef(0);
-  const [loadProgress, setLoadProgress] = useState(0);
+  const directionRef = useRef(1); // 1 = forward, -1 = reverse (ping-pong)
   const [allLoaded, setAllLoaded] = useState(false);
-  const [visibleFrame, setVisibleFrame] = useState(0);
 
   /* Pre-load every frame into an HTMLImageElement for canvas drawing */
   useEffect(() => {
@@ -37,7 +36,6 @@ export default function ScrollAnimation() {
       img.src = src;
       img.onload = () => {
         loaded++;
-        setLoadProgress(loaded / TOTAL);
         if (loaded === TOTAL) {
           imagesRef.current = images;
           setAllLoaded(true);
@@ -87,112 +85,53 @@ export default function ScrollAnimation() {
     drawFrame(currentFrameRef.current);
   }, [drawFrame]);
 
-  /* Scroll handler — maps section scroll progress to frame index */
+  /* Auto-play animation loop — ping-pong through frames like a video */
   useEffect(() => {
     if (!allLoaded) return;
 
-    // Draw first frame immediately
     resizeCanvas();
 
-    let rafId;
-    const onScroll = () => {
-      rafId = requestAnimationFrame(() => {
-        const section = sectionRef.current;
-        if (!section) return;
+    const intervalId = setInterval(() => {
+      const frame = currentFrameRef.current;
+      const dir = directionRef.current;
 
-        const rect = section.getBoundingClientRect();
-        const scrollableHeight = section.offsetHeight - window.innerHeight;
-        if (scrollableHeight <= 0) return;
+      // Calculate next frame with ping-pong bounce
+      const nextFrame = frame + dir;
+      if (nextFrame >= TOTAL - 1) {
+        directionRef.current = -1;
+        currentFrameRef.current = TOTAL - 1;
+      } else if (nextFrame <= 0) {
+        directionRef.current = 1;
+        currentFrameRef.current = 0;
+      } else {
+        currentFrameRef.current = nextFrame;
+      }
 
-        // Progress 0→1 as the section scrolls through
-        const progress = Math.min(
-          Math.max(-rect.top / scrollableHeight, 0),
-          1
-        );
+      drawFrame(currentFrameRef.current);
+    }, FRAME_DURATION);
 
-        const frameIndex = Math.min(
-          Math.floor(progress * TOTAL),
-          TOTAL - 1
-        );
-
-        if (frameIndex !== currentFrameRef.current) {
-          currentFrameRef.current = frameIndex;
-          setVisibleFrame(frameIndex);
-          drawFrame(frameIndex);
-        }
-      });
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", resizeCanvas);
-    onScroll(); // initial position
 
     return () => {
-      window.removeEventListener("scroll", onScroll);
+      clearInterval(intervalId);
       window.removeEventListener("resize", resizeCanvas);
-      cancelAnimationFrame(rafId);
     };
   }, [allLoaded, drawFrame, resizeCanvas]);
 
   return (
-    <section
-      ref={sectionRef}
-      id="scroll-animation"
-      className="relative bg-ink"
-      /* Shorter scroll runway → faster animation */
-      style={{ height: `${TOTAL * 40}vh` }}
-    >
-      {/* Sticky viewport — fills the screen while we scroll through */}
-      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
-        {/* Loading indicator */}
-        {!allLoaded && (
-          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-4 bg-ink">
-            <div className="relative w-48 h-1 rounded-full bg-white/10 overflow-hidden">
-              <div
-                className="absolute inset-y-0 left-0 bg-red rounded-full transition-all duration-300"
-                style={{ width: `${loadProgress * 100}%` }}
-              />
-            </div>
-            <span className="plate-number text-steel text-xs tracking-widest uppercase">
-              Loading frames… {Math.round(loadProgress * 100)}%
-            </span>
-          </div>
-        )}
-
-        {/* Canvas */}
-        <canvas
-          ref={canvasRef}
-          className="w-full h-full"
-          style={{
-            opacity: allLoaded ? 1 : 0,
-            transition: "opacity 0.5s ease",
-          }}
-        />
-
-        {/* Subtle top/bottom gradient vignette to blend into ink background */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ink to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-ink to-transparent" />
-
-        {/* Scroll progress indicator */}
-        {allLoaded && (
-          <div className="absolute right-6 top-1/2 -translate-y-1/2 flex flex-col items-center gap-1 z-10">
-            {Array.from({ length: TOTAL }).map((_, i) => (
-              <div
-                key={i}
-                className="rounded-full transition-all duration-200"
-                style={{
-                  width: i === visibleFrame ? 6 : 3,
-                  height: i === visibleFrame ? 6 : 3,
-                  backgroundColor:
-                    i === visibleFrame
-                      ? "var(--color-red)"
-                      : "rgba(255,255,255,0.2)",
-                }}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-    </section>
+    <canvas
+      ref={canvasRef}
+      aria-hidden="true"
+      className="hero-animation-canvas"
+      style={{
+        position: "absolute",
+        inset: 0,
+        width: "100%",
+        height: "100%",
+        opacity: allLoaded ? 1 : 0,
+        transition: "opacity 0.8s ease",
+        pointerEvents: "none",
+      }}
+    />
   );
 }
