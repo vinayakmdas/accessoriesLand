@@ -1,14 +1,12 @@
-// Hero carousel images, bundled from src/assets/images/hero/.
-// Replace each file with a real, high-resolution shop/vehicle photo of the
-// same name — the carousel picks up the change automatically.
-import hero1 from "../assets/images/hero/hero-1.svg";
-import hero2 from "../assets/images/hero/hero-2.svg";
-import hero3 from "../assets/images/hero/hero-3.svg";
-import hero4 from "../assets/images/hero/hero-4.svg";
+// Hero carousel images – using assets from src/assets/hero_carousal
+import alloy from "../assets/hero_carousal/alloy.jpeg";
+import brake from "../assets/hero_carousal/break.jpeg";
+import light from "../assets/hero_carousal/light.jpeg";
+import steering from "../assets/hero_carousal/stearing.jpeg";
 
 export const heroImages = [
-  { id: 1, image: hero1, caption: "Interior systems, upgraded" },
-  { id: 2, image: hero2, caption: "Precision LED & lighting work" },
-  { id: 3, image: hero3, caption: "Next-gen Android infotainment" },
-  { id: 4, image: hero4, caption: "Full exterior customization" },
+  { id: 1, image: alloy, caption: "Alloy Wheels" },
+  { id: 2, image: brake, caption: "Brake System" },
+  { id: 3, image: light, caption: "Bright Lights" },
+  { id: 4, image: steering, caption: "Steering Precision" },
 ];

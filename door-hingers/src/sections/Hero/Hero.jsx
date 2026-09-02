@@ -4,24 +4,22 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Button from "../../components/Button/Button";
 import WhatsAppButton from "../../components/WhatsAppButton/WhatsAppButton";
-import ScrollAnimation from "../ScrollAnimation/ScrollAnimation";
 import { heroImages } from "../../data/heroImages";
 
-const AUTOPLAY_MS = 5000;
+const AUTOPLAY_MS = 6000;
+const TRANSITION_DURATION = 1.2; // seconds for crossfade
 
 export default function Hero() {
   const [index, setIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
   const [paused, setPaused] = useState(false);
   const touchStartX = useRef(null);
   const count = heroImages.length;
 
   const goTo = useCallback(
     (next) => {
-      setDirection(next > index || (index === count - 1 && next === 0) ? 1 : -1);
       setIndex(((next % count) + count) % count);
     },
-    [index, count]
+    [count]
   );
 
   const next = useCallback(() => goTo(index + 1), [goTo, index]);
@@ -45,12 +43,6 @@ export default function Hero() {
     touchStartX.current = null;
   };
 
-  const variants = {
-    enter: (dir) => ({ opacity: 0, scale: 1.06, x: dir > 0 ? 40 : -40 }),
-    center: { opacity: 1, scale: 1, x: 0 },
-    exit: (dir) => ({ opacity: 0, scale: 1.02, x: dir > 0 ? -40 : 40 }),
-  };
-
   return (
     <section
       id="home"
@@ -60,38 +52,43 @@ export default function Hero() {
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
-      {/* ─── Background layers ─────────────────────────────────────── */}
-
-      {/* Layer 1: Image carousel */}
-      <div className="hero-bg-carousel">
-        <AnimatePresence initial={false} custom={direction} mode="popLayout">
-          <motion.img
-            key={heroImages[index].id}
-            src={heroImages[index].image}
-            alt={heroImages[index].caption}
-            custom={direction}
-            variants={variants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="hero-carousel-img"
-          />
+      {/* ─── Layer 1: Full-screen background image carousel ─────────── */}
+      <div className="hero-bg-carousel" aria-hidden="true">
+        <AnimatePresence initial={false}>
+          <motion.div
+            key={index}
+            className="hero-slide"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: TRANSITION_DURATION, ease: "easeInOut" }}
+          >
+            <motion.img
+              src={heroImages[index].image}
+              alt={heroImages[index].caption}
+              className="hero-slide-img"
+              initial={{ scale: 1.0 }}
+              animate={{ scale: 1.08 }}
+              transition={{
+                duration: AUTOPLAY_MS / 1000 + TRANSITION_DURATION,
+                ease: "easeOut",
+              }}
+              draggable={false}
+            />
+          </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* Layer 2: Auto-playing frame animation (video-like) */}
-      <div className="hero-animation-layer">
-        <ScrollAnimation />
-      </div>
+      {/* ─── Layer 2: Gradient overlays for premium look + readability ─ */}
+      <div className="hero-overlay hero-overlay-radial" />
+      <div className="hero-overlay hero-overlay-top" />
+      <div className="hero-overlay hero-overlay-bottom" />
+      <div className="hero-overlay hero-overlay-left" />
 
-      {/* Layer 3: Gradient overlays for text readability */}
-      <div className="hero-gradient-overlay hero-gradient-lr" />
-      <div className="hero-gradient-overlay hero-gradient-bt" />
-      <div className="hero-gradient-overlay hero-gradient-vignette" />
+      {/* Subtle film-grain texture */}
       <div className="grain-overlay" />
 
-      {/* Ambient red sweep, signature motion element */}
+      {/* Ambient red sweep */}
       <motion.div
         aria-hidden="true"
         className="hero-red-sweep"
@@ -99,7 +96,7 @@ export default function Hero() {
         transition={{ duration: 9, repeat: Infinity, ease: "linear" }}
       />
 
-      {/* ─── Content ───────────────────────────────────────────────── */}
+      {/* ─── Layer 3: Content ──────────────────────────────────────────── */}
       <div className="hero-content">
         <motion.span
           initial={{ opacity: 0, y: 12 }}
@@ -142,7 +139,7 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* ─── Carousel controls ─────────────────────────────────────── */}
+      {/* ─── Layer 4: Carousel controls ────────────────────────────────── */}
       <div className="hero-controls">
         <button
           onClick={prev}
@@ -160,8 +157,7 @@ export default function Hero() {
               aria-selected={i === index}
               aria-label={`Go to slide ${i + 1}`}
               onClick={() => goTo(i)}
-              className="hero-dot"
-              style={{ width: i === index ? 28 : 8 }}
+              className={`hero-dot${i === index ? " hero-dot--active" : ""}`}
             >
               {i === index && (
                 <motion.span

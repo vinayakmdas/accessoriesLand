@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
+import AboutImageCarousel from "../../components/AboutImageCarousel";
 import { motion, useInView } from "framer-motion";
 import {
   CheckCircle2,
@@ -70,53 +71,8 @@ export default function About() {
       <div className="about-container">
         {/* ─── Top: Split layout — visual + intro ──────────────────── */}
         <div className="about-split">
-          {/* Left: Animated car visual */}
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            className="about-visual-card"
-          >
-            <div className="about-visual-inner">
-              {/* Clean gradient visual with floating service tags */}
-              <motion.div
-                animate={{ opacity: [0.3, 0.5, 0.3] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="about-car-glow"
-              />
-
-              <div className="about-visual-grid">
-                {[
-                  { num: "8+", text: "Services" },
-                  { num: "24/6", text: "Support" },
-                  { num: "100%", text: "Quality" },
-                  { num: "5+", text: "Years" },
-                ].map((item, i) => (
-                  <motion.div
-                    key={item.text}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
-                    className="about-visual-stat"
-                  >
-                    <span className="about-visual-stat-num">{item.num}</span>
-                    <span className="about-visual-stat-text">{item.text}</span>
-                  </motion.div>
-                ))}
-              </div>
-
-            </div>
-
-            {/* Badge */}
-            <div className="about-badge">
-              <span className="about-badge-number">8+</span>
-              <span className="about-badge-text">
-                service categories
-                <br />
-                under one roof
-              </span>
-            </div>
-          </motion.div>
+          {/* Left: About images carousel */}
+          <AboutImageCarousel />
 
           {/* Right: Text content */}
           <motion.div

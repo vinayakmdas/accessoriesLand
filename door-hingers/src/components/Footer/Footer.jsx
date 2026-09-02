@@ -1,5 +1,24 @@
 import { Link } from "react-router-dom";
-import { Image, Users, Video, MapPin, Phone, Mail } from "lucide-react";
+import { Users, Video, MapPin, Phone, Mail } from "lucide-react";
+
+/* Inline Instagram SVG — lucide-react v1.37 doesn't export an Instagram icon */
+const InstagramIcon = ({ size = 16 }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+    <circle cx="12" cy="12" r="5" />
+    <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
+  </svg>
+);
 import { businessConfig } from "../../config/businessConfig";
 import { services } from "../../data/services";
 import logoImg from "../../assets/images/logo.png";
@@ -25,7 +44,7 @@ export default function Footer() {
                 aria-label="Instagram"
                 className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-paper/80 hover:text-red hover:border-red transition-colors"
               >
-                <Image size={16} />
+                <InstagramIcon size={16} />
               </a>
             )}
             {businessConfig.social.facebook && (
