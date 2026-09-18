@@ -402,6 +402,26 @@ body {
   margin-bottom: 4rem;
 }
 
+/* Carousel inside the about split — needs an explicit height so Swiper
+   (especially with effect="fade") can render correctly on all viewports. */
+.about-image-carousel {
+  width: 100%;
+  height: 340px;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.about-image-carousel .swiper-slide {
+  height: 340px;
+}
+
+.about-image-carousel .swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
 /* Visual card */
 .about-visual-card {
   position: relative;
@@ -926,6 +946,14 @@ body {
 
   .about-visual-inner {
     height: 420px;
+  }
+
+  .about-image-carousel {
+    height: 460px;
+  }
+
+  .about-image-carousel .swiper-slide {
+    height: 460px;
   }
 
   .about-heading {
