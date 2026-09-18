@@ -1,12 +1,8 @@
 import { useState } from "react";
-import emailjs from "@emailjs/browser";
-import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { services } from "../../data/services";
+import { businessConfig } from "../../config/businessConfig";
 import Button from "../Button/Button";
-
-const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 const initialState = {
   name: "",
@@ -31,10 +27,28 @@ function validate(values) {
   return errors;
 }
 
+function buildWhatsAppUrl(values) {
+  const lines = [
+    `Hi Accessories Land, I'd like to make an enquiry.`,
+    ``,
+    `👤 Name: ${values.name}`,
+    `📞 Phone: ${values.phone}`,
+    values.email ? `📧 Email: ${values.email}` : null,
+    values.service ? `🔧 Service: ${values.service}` : null,
+    ``,
+    `📝 Message:`,
+    values.message,
+  ]
+    .filter((line) => line !== null)
+    .join("\n");
+
+  return `https://wa.me/${businessConfig.whatsapp}?text=${encodeURIComponent(lines)}`;
+}
+
 export default function ContactForm() {
   const [values, setValues] = useState(initialState);
   const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState("idle"); // idle | loading | success | error
+  const [status, setStatus] = useState("idle"); // idle | success
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,38 +56,16 @@ export default function ContactForm() {
     setErrors((err) => ({ ...err, [name]: undefined }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const validationErrors = validate(values);
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length > 0) return;
 
-    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
-      // Not configured yet — fail gracefully instead of pretending to send.
-      setStatus("error");
-      return;
-    }
-
-    setStatus("loading");
-    try {
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        {
-          from_name: values.name,
-          phone: values.phone,
-          reply_to: values.email,
-          service: values.service || "Not specified",
-          message: values.message,
-        },
-        { publicKey: EMAILJS_PUBLIC_KEY }
-      );
-      setStatus("success");
-      setValues(initialState);
-    } catch (err) {
-      console.error("EmailJS error:", err);
-      setStatus("error");
-    }
+    // Open WhatsApp with the enquiry pre-filled
+    window.open(buildWhatsAppUrl(values), "_blank", "noopener,noreferrer");
+    setStatus("success");
+    setValues(initialState);
   };
 
   const fieldClass =
@@ -171,25 +163,13 @@ export default function ContactForm() {
         {errors.message && <p className="text-red-bright text-xs mt-1">{errors.message}</p>}
       </div>
 
-      <Button type="submit" disabled={status === "loading"} className="w-full sm:w-auto">
-        {status === "loading" ? (
-          <>
-            <Loader2 size={18} className="animate-spin" /> Sending...
-          </>
-        ) : (
-          "Send Enquiry"
-        )}
+      <Button type="submit" className="w-full sm:w-auto">
+        Send Enquiry via WhatsApp
       </Button>
 
       {status === "success" && (
         <p className="flex items-center gap-2 text-sm text-green-400">
-          <CheckCircle2 size={18} /> Your enquiry has been sent. We'll get back to you shortly.
-        </p>
-      )}
-      {status === "error" && (
-        <p className="flex items-center gap-2 text-sm text-red-bright">
-          <AlertCircle size={18} />
-          Couldn't send your enquiry right now. Please call or WhatsApp us directly, or try again in a moment.
+          <CheckCircle2 size={18} /> WhatsApp opened! Your enquiry message is ready to send.
         </p>
       )}
     </form>

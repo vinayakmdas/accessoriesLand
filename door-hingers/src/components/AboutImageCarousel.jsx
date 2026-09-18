@@ -31,7 +31,7 @@ export default function AboutImageCarousel() {
       modules={[Autoplay, Pagination, EffectFade]}
       effect="fade"
       loop={true}
-      autoplay={{ delay: 4000, disableOnInteraction: false }}
+      autoplay={{ delay: 2000, disableOnInteraction: false }}
       pagination={{ clickable: true }}
       className="about-image-carousel"
       style={carouselStyle}

@@ -14,7 +14,7 @@ export default function Carousel({ images, autoplay = true }) {
       pagination={{ clickable: true }}
       effect="fade"
       loop
-      autoplay={autoplay ? { delay: 5000, disableOnInteraction: false } : false}
+      autoplay={autoplay ? { delay: 2500, disableOnInteraction: false } : false}
       className="hero-carousel"
     >
       {images.map((img) => (
